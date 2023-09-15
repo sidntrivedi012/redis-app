@@ -1,3 +1,4 @@
+.vagrant/**
 demo.bin
 data/**
 nginx/certs/**
