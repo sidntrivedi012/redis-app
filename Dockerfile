@@ -6,13 +6,13 @@ ARG APP_ADDRESS
 ARG REDIS_ADDRESS
 
 # Install make and then build the application using `make build`
-RUN apk update && apk add --no-cache make
+RUN apk update && apk add --no-cache make=~4.4
 WORKDIR /app
 COPY . /app
 RUN make build
 
 # Final stage based on distroless image in order for minimalism and security needs.
-FROM gcr.io/distroless/static-debian11
+FROM gcr.io/distroless/static-debian12
 ARG APP_ADDRESS
 ARG REDIS_ADDRESS
 
