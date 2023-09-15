@@ -1,0 +1,19 @@
+version = 1
+
+[[analyzers]]
+name = "shell"
+
+[[analyzers]]
+name = "ansible"
+
+[[analyzers]]
+name = "docker"
+
+[[analyzers]]
+name = "go"
+
+  [analyzers.meta]
+  import_root = "github.com/sidntrivedi012/redis-app"
+
+[[transformers]]
+name = "gofumpt"
