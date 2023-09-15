@@ -61,10 +61,7 @@ func main() {
 		addr = ":8080"
 	}
 	log.Printf("Booting app on %s", addr)
-	err = http.ListenAndServe(":1234", nil)
-	if err != nil {
-		panic(err)
-	}
+	http.ListenAndServe(addr, r)
 }
 
 func incrementKey(c redis.Conn) error {

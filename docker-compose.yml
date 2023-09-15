@@ -1,0 +1,42 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEMO_REDIS_ADDR=redis:6379
+      - DEMO_APP_ADDR=:8000
+    # Depends on redis to start correctly.
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --appendonly yes
+    volumes:
+        - ./data:/data
+    ports:
+        - '6379:6379'
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  nginx:
+    image: nginx
+    volumes:
+      - type: bind
+        source: ./nginx/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+      - type: bind
+        source: ./nginx/certs/nginx-selfsigned.crt
+        target: /etc/nginx/nginx-selfsigned.crt
+      - type: bind
+        source: ./nginx/certs/nginx-selfsigned.key
+        target: /etc/nginx/nginx-selfsigned.key
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - app
