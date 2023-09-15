@@ -11,10 +11,8 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
-var (
-	// injected during build
-	keyspace = "demo:requests"
-)
+// injected during build
+var keyspace = "demo:requests"
 
 // initCachePool initializes redis for cache
 func initCachePool(addr string) *redis.Pool {
@@ -53,20 +51,20 @@ func main() {
 		}
 		val, err := redis.Int(conn.Do("GET", keyspace))
 		if err != nil {
-			fmt.Fprintf(w,"oops something went wrong: %v", err)
+			fmt.Fprintf(w, "oops something went wrong: %v", err)
 			return
 		}
-		fmt.Fprintf(w,"welcome to api. key count is: %d", val)
+		fmt.Fprintf(w, "welcome to api. key count is: %d", val)
 	})
 	addr := os.Getenv("DEMO_APP_ADDR")
 	if addr == "" {
 		addr = ":8080"
 	}
 	log.Printf("Booting app on %s", addr)
-    err = http.ListenAndServe(":1234", nil)
-    if err != nil {
-        panic(err)
-    }
+	err = http.ListenAndServe(":1234", nil)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func incrementKey(c redis.Conn) error {
