@@ -46,7 +46,7 @@ func main() {
 
 	// initialise handlers
 	r := chi.NewRouter()
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/", func(w http.ResponseWriter, _ *http.Request) {
 		err = incrementKey(conn)
 		if err != nil {
 			w.Write([]byte(fmt.Sprintf("oops something went wrong: %v", err)))
