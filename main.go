@@ -13,7 +13,6 @@ import (
 
 var (
 	// injected during build
-	version  = "unknown"
 	keyspace = "demo:requests"
 )
 
@@ -49,22 +48,25 @@ func main() {
 	r.Get("/", func(w http.ResponseWriter, _ *http.Request) {
 		err = incrementKey(conn)
 		if err != nil {
-			w.Write([]byte(fmt.Sprintf("oops something went wrong: %v", err)))
+			fmt.Fprintf(w, "oops something went wrong: %v", err)
 			return
 		}
 		val, err := redis.Int(conn.Do("GET", keyspace))
 		if err != nil {
-			w.Write([]byte(fmt.Sprintf("oops something went wrong: %v", err)))
+			fmt.Fprintf(w,"oops something went wrong: %v", err)
 			return
 		}
-		w.Write([]byte(fmt.Sprintf("welcome to api. key count is: %d", val)))
+		fmt.Fprintf(w,"welcome to api. key count is: %d", val)
 	})
 	addr := os.Getenv("DEMO_APP_ADDR")
 	if addr == "" {
 		addr = ":8080"
 	}
 	log.Printf("Booting app on %s", addr)
-	http.ListenAndServe(addr, r)
+    err = http.ListenAndServe(":1234", nil)
+    if err != nil {
+        panic(err)
+    }
 }
 
 func incrementKey(c redis.Conn) error {

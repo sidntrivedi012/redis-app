@@ -6,7 +6,7 @@ ARG APP_ADDRESS
 ARG REDIS_ADDRESS
 
 # Install make and then build the application using `make build`
-RUN apk update && apk add --no-cache make
+RUN apk update && apk add --no-cache make=~4.4
 WORKDIR /app
 COPY . /app
 RUN make build
