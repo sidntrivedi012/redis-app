@@ -1,5 +1,5 @@
 ---
-- name: Configure and deploy demo-ops VM
+- name: Configure and deploy demo-ops virtual machine
   hosts: all
   become: true
   roles:

@@ -1,6 +1,5 @@
 .vagrant/**
 demo.bin
 data/**
-nginx/certs/**
 prometheus_data
 grafana_data

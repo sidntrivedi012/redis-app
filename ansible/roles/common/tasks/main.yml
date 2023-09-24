@@ -34,11 +34,11 @@
   become: yes
   command: ufw allow ssh
 
-- name: Allow HTTP
+- name: Allow HTTP for NGINX
   become: yes
   command: ufw allow 80
 
-- name: Allow HTTPS
+- name: Allow HTTPS for NGINX
   become: yes
   command: ufw allow 443
 
