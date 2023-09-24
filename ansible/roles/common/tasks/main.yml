@@ -34,9 +34,13 @@
   become: yes
   command: ufw allow ssh
 
-- name: Allow NGINX with both HTTP and HTTPS
+- name: Allow HTTP
   become: yes
-  command: ufw allow 'Nginx Full'
+  command: ufw allow 80
+
+- name: Allow HTTPS
+  become: yes
+  command: ufw allow 443
 
 - name: Check UFW status
   become: yes
@@ -101,12 +105,11 @@
    sysctl_set: yes
    state: present
    reload: yes
-   sysctl_file: /etc/sysctl.d/90-ip.conf
-   loop:
-     - name: net.ipv4.ip_forward
-       value: "0"
-     - name: net.ipv6.conf.all.forwarding
-       value: "0"
+  loop:
+    - name: net.ipv4.ip_forward
+      value: "0"
+    - name: net.ipv6.conf.all.forwarding
+      value: "0"
 
 - name: Set the system's timezone to Asia/Kolkata
   become: yes

@@ -1,6 +1,6 @@
 ---
 - name: Configure and deploy demo-ops VM
-  hosts: demo-ops
+  hosts: all
   become: true
   roles:
     - common

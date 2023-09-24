@@ -1,1 +1,58 @@
 ---
+# Install Docker and related utilities in the machine.
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+
+- name: Install Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v2.22.0/docker-compose-linux-aarch64"
+    dest: /usr/local/bin/docker-compose
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy Docker daemon configuration
+  copy:
+    src: ../../daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: Enable Docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+# - name: Copy project files to the machine
+#   copy:
+#     src: ../../../
+#     dest: /etc/demo-ops
+
+- name: Run docker-compose up
+  command: docker compose up -d
+  args:
+    chdir: /etc/demo-ops
+
