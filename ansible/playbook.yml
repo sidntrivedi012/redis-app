@@ -1,0 +1,8 @@
+---
+- name: Configure and deploy demo-ops VM
+  hosts: demo-ops
+  become: true
+  roles:
+    - common
+    - docker
+    - monitoring
