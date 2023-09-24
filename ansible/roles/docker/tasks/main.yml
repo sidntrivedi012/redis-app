@@ -46,11 +46,6 @@
     enabled: yes
     state: started
 
-- name: Copy project files to the machine
-  copy:
-    src: ../../../
-    dest: /etc/demo-ops
-
 - name: Run docker-compose up
   command: docker compose up -d
   args:
