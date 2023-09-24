@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-ops-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-ops-app
+  template:
+    metadata:
+      labels:
+        app: demo-ops-app
+    spec:
+      containers:
+        - name: demo-ops-app
+          image: demo-ops
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "100m"
+            limits:
+              memory: "64Mi"
+              cpu: "500m"
