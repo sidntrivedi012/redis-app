@@ -8,9 +8,10 @@ COPY go.mod go.sum main.go Makefile /app/
 RUN make build
 
 # Final stage based on distroless image in order for minimalism and security needs.
-FROM alpine
+FROM alpine:3.18
 
 # Copy the binary from the builder stage and set params to be executed.
 COPY --from=builder /app/demo.bin /
-EXPOSE 8000
+# Expose server and prometheus metrics port.
+EXPOSE 8000 2112
 CMD ["/demo.bin"]

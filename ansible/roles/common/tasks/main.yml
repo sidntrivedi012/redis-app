@@ -1,0 +1,117 @@
+---
+- name: Set hostname as demo-ops
+  hostname:
+    name: demo-ops
+
+- name: Create a user demo
+  user:
+    name: demo
+    createhome: yes
+
+- name: Disable root ssh login
+  become: yes
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+
+- name: Install UFW
+  become: yes
+  apt:
+    name: ufw
+    state: latest
+
+- name: Deny all ingress in the virtual machine
+  become: yes
+  command: ufw default deny incoming
+
+- name: Allow all egress from the virtual machine
+  become: yes
+  command: ufw default allow outgoing
+
+- name: Allow SSH access
+  become: yes
+  command: ufw allow ssh
+
+- name: Allow HTTP
+  become: yes
+  command: ufw allow 80
+
+- name: Allow HTTPS
+  become: yes
+  command: ufw allow 443
+
+- name: Check UFW status
+  become: yes
+  command: ufw status verbose
+
+- name: Harden kernel parameters
+  become: yes
+  ansible.posix.sysctl:
+   name: "{{ item.name }}"
+   value: '{{ item.value }}'
+   sysctl_set: yes
+   state: present
+   reload: yes
+  loop:
+   # Increase open file limit in filesystem.
+   - name: fs.file-max
+     value: "65536"
+   # Add randomness to virtual address space. Makes it
+   # harder for an attacker to use known memory addresses for exploitation.
+   - name: kernel.randomize_va_space
+     value: "2"
+   # Disable dmesg access for unpriviliged users.
+   - name: kernel.dmesg_restrict
+     value: "1"
+   # Disable kernel profiling by unprivileged users.
+   - name: kernel.perf_event_paranoid
+     value: "2"
+
+- name: Harden network parameters
+  become: yes
+  ansible.posix.sysctl:
+   name: "{{ item.name }}"
+   value: '{{ item.value }}'
+   sysctl_set: yes
+   state: present
+   reload: yes
+  loop:
+   # Disable TCP SYN cookies to prevent SYN flood attacks.
+   - name: net.ipv4.tcp_syncookies
+     value: "1"
+   # Log martian packets.
+   - name: net.ipv4.conf.default.log_martians
+     value: "1"
+   - name: net.ipv4.conf.all.log_martians
+     value: "1"
+   # Don't accept source-routed packets to prevent accepting routing changes
+   # that could bypass network security.
+   - name: net.ipv4.conf.all.accept_source_route
+     value: "0"
+   - name: net.ipv4.conf.default.accept_source_route
+     value: "0"
+   - name: net.ipv6.conf.all.accept_source_route
+     value: "0"
+   - name: net.ipv6.conf.default.accept_source_route
+     value: "0"
+
+- name: Disable IP forwarding
+  become: yes
+  ansible.posix.sysctl:
+   name: "{{ item.name }}"
+   value: '{{ item.value }}'
+   sysctl_set: yes
+   state: present
+   reload: yes
+  loop:
+    - name: net.ipv4.ip_forward
+      value: "0"
+    - name: net.ipv6.conf.all.forwarding
+      value: "0"
+
+- name: Set the system's timezone to Asia/Kolkata
+  become: yes
+  timezone:
+    name: Asia/Kolkata

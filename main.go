@@ -9,6 +9,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/gomodule/redigo/redis"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // injected during build
@@ -30,6 +31,10 @@ func initCachePool(addr string) *redis.Pool {
 }
 
 func main() {
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+		http.ListenAndServe(":2112", nil)
+	}()
 	// init redis
 	cachePool := initCachePool(os.Getenv("DEMO_REDIS_ADDR"))
 
