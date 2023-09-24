@@ -10,4 +10,4 @@ scrape_configs:
   - job_name: 'redis'
     static_configs:
       # Redis exporter's default port.
-      - targets: ['redis-server:9121']
+      - targets: ['redis-exporter:9121']

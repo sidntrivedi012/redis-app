@@ -76,3 +76,10 @@ services:
       - type: bind
         source: ./grafana_data
         target: /var/lib/grafana
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    ports:
+      - 9121:9121
+    command: '--redis.addr=redis://redis-server:6379'
+    container_name: redis-exporter
