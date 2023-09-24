@@ -31,10 +31,10 @@ func initCachePool(addr string) *redis.Pool {
 }
 
 func main() {
-    go func(){
-        http.Handle("/metrics", promhttp.Handler())
-        http.ListenAndServe(":2112", nil)
-    }()
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+		http.ListenAndServe(":2112", nil)
+	}()
 	// init redis
 	cachePool := initCachePool(os.Getenv("DEMO_REDIS_ADDR"))
 
