@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'go_application'
+    static_configs:
+      # Application's port to expose prometheus metrics.
+      - targets: ['app:2112']
+
+  - job_name: 'redis'
+    static_configs:
+      # Redis exporter's default port.
+      - targets: ['redis-server:9121']
