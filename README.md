@@ -1,6 +1,7 @@
 # Redis Application
 
 <details><summary>Problem Statement</summary>
+
 ## Description
 
 This is a sample `Go` application which connects to Redis. The app increments a Redis `counter` on an incoming request.
@@ -56,3 +57,37 @@ If you have extra time and experience working with Kubernetes or Nomad, you're w
   - Create a Job spec for the app. You can group both the services (`app` and `redis`) under the same job.
   - Run on a local Nomad dev agent.
 </details>
+
+## About the project
+
+This is a project built around deploying and managing a Go application that interacts with Redis.The application increments the value of a key every time a request is made to it.
+- It is deployed in a virtual machine through `docker-compose`.
+- The virtual machine orchestration is done using `Vagrant`.
+- The environment for deploying the application is created using `Ansible`.
+- Prometheus and Grafana have been configured for monitoring the Go application
+    and Redis.
+- Have added kubernetes manifests as well for the application deployment on a
+    Kubernetes based environment.
+
+## Screenshots
+
+### Vagrant Setup And Provisioning
+
+![vagrant setup and provisioning](./media/vagrant-setup-demo.mov)
+
+**Vagrant Private Network**
+
+Note that the static IP that we have provided is `192.168.50.4`
+
+![vagrant network](./media/vagrant-network.png)
+
+### Monitoring
+
+**Redis grafana dashboard**
+
+![redis dashboard](./media/grafana-redis.png)
+
+**Go application grafana dashboard**
+
+![go dashboard](./media/grafana-go.png)
+
