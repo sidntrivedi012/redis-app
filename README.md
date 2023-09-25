@@ -73,7 +73,7 @@ This is a project built around deploying and managing a Go application that inte
 
 ### Vagrant Setup And Provisioning
 
-![vagrant setup and provisioning](./media/vagrant-up-recording.mp4)
+Link to the vagrant provisioning screencast: ![vagrant setup and provisioning](./media/vagrant-up-recording.mp4)
 
 **Vagrant Private Network**
 
@@ -86,6 +86,8 @@ Note that the static IP that we have provided is `192.168.50.4`
 **Redis grafana dashboard**
 
 ![redis dashboard](./media/grafana-redis.png)
+
+![redis dashboard 2](./media/grafana-redis-2.png)
 
 **Go application grafana dashboard**
 
