@@ -1,5 +1,20 @@
 # Redis Application
 
+## About the project
+
+This is a project built around deploying and managing a Go application that interacts with Redis.The application increments the value of a key every time a request is made to it.
+- It is deployed in a virtual machine through `docker-compose`.
+- The virtual machine orchestration is done using `Vagrant`.
+- The environment for deploying the application is created using `Ansible`.
+- Prometheus and Grafana have been configured for monitoring the Go application
+    and Redis.
+- Have added kubernetes manifests as well for the application deployment on a
+    Kubernetes based environment.
+
+**Note**: Have committed the self-signed certificates since they won't cause any
+damage and would help in verifying a task mentioned from the list of tasks in
+problem statement.
+
 <details><summary>Problem Statement</summary>
 
 ## Description
@@ -57,17 +72,6 @@ If you have extra time and experience working with Kubernetes or Nomad, you're w
   - Create a Job spec for the app. You can group both the services (`app` and `redis`) under the same job.
   - Run on a local Nomad dev agent.
 </details>
-
-## About the project
-
-This is a project built around deploying and managing a Go application that interacts with Redis.The application increments the value of a key every time a request is made to it.
-- It is deployed in a virtual machine through `docker-compose`.
-- The virtual machine orchestration is done using `Vagrant`.
-- The environment for deploying the application is created using `Ansible`.
-- Prometheus and Grafana have been configured for monitoring the Go application
-    and Redis.
-- Have added kubernetes manifests as well for the application deployment on a
-    Kubernetes based environment.
 
 ## Screenshots
 
