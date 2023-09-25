@@ -15,9 +15,7 @@ This is a project built around deploying and managing a Go application that inte
 damage and would help in verifying a task mentioned from the list of tasks in
 problem statement.
 
-<details><summary>Problem Statement</summary>
-
-## Description
+## Problem statement
 
 This is a sample `Go` application which connects to Redis. The app increments a Redis `counter` on an incoming request.
 
