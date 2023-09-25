@@ -35,7 +35,6 @@ services:
       - type: bind
         source: ./nginx/nginx.conf
         target: /etc/nginx/conf.d/default.conf
-      # Mount self-signed certificates for TLS.
       - type: bind
         source: ./nginx/certs/nginx-selfsigned.crt
         target: /etc/nginx/nginx-selfsigned.crt
