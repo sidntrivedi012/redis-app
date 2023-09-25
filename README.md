@@ -73,7 +73,7 @@ This is a project built around deploying and managing a Go application that inte
 
 ### Vagrant Setup And Provisioning
 
-![vagrant setup and provisioning](./media/vagrant-up-recording.mov)
+![vagrant setup and provisioning](./media/vagrant-up-recording.mp4)
 
 **Vagrant Private Network**
 
